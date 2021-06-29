@@ -8,4 +8,4 @@
 
 ### If you encounter any problems. feel free to reply to my scripts topic.
 
-[Offical topic]()
+[Offical topic](https://forum.cfx.re/t/esx-aq-delivery-general-pick-up-points-wait-time-when-packages-are-empty/3634044)
