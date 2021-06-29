@@ -14,15 +14,15 @@ Config = {
   ["markersDistance"] = 16, -- Distance at which to display return marker.
   ["deliveryMarkerDistance"] = 15, -- Distance at which to display pickup marker.
   ["insurancePrice"] = 2000, -- Price to pay for insurance.
-  ["waitTimeBeforeOtherPalette"] = 40, -- Time to wait after palette refreshes.
+  ["waitTimeBeforeOtherPalette"] = 60, -- Time to wait after palette refreshes.
 
 -----------------------------------------------------
 -----------------------------------------------------
-  ["itemsInVehicle"] = 1, -- MUST BE LESS OR EQUAL TO THE AMOUNT OF DELIVERY LOCATIONS.
+  ["itemsInVehicle"] = 5, -- MUST BE LESS OR EQUAL TO THE AMOUNT OF DELIVERY LOCATIONS.
 -----------------------------------------------------
 -----------------------------------------------------
 
-  ["itemsInPalette"] = 5, -- How many items fit inside of the vehicle.
+  ["itemsInPalette"] = 15, -- How many items fit inside of the vehicle.
   ["numberPlate"] = 'courier', -- Job vehicles number plate.
 
   ["blip"] = {
