@@ -14,7 +14,20 @@ Config = {
   ["markersDistance"] = 16, -- Distance at which to display return marker.
   ["deliveryMarkerDistance"] = 15, -- Distance at which to display pickup marker.
   ["insurancePrice"] = 2000, -- Price to pay for insurance.
-  ["waitTimeBeforeOtherPalette"] = 60, -- Time to wait after palette refreshes.
+  ["waitTimeBeforeOtherPalette"] = 40, -- Time to wait after palette refreshes.
+  ["drawRect"] = false, -- Draw's a rectangle on prompts.
+
+-----------------------------------------------------
+-----------------------------------------------------
+-- ONLY ONE MUST BE SET TO TRUE.  
+  ["payFromBaseToDeliveryPoint"] = true,
+  ["payFromDeliveryPrice"] = false, -- If this is active, add `from` and `to` into delivery locations.
+
+-- ONLY USE THESE WHEN ["payFromBaseToDeliveryPoint"] is set to true.
+  ["payFromBaseToDeliveryPointDivider"] = 1,
+  ["payFromBaseToDeliveryPointMultiplier"] = 1,
+-----------------------------------------------------
+-----------------------------------------------------
 
 -----------------------------------------------------
 -----------------------------------------------------
@@ -42,7 +55,7 @@ Config = {
     marker = 27,
     coords = vector3(826.41, -2983.75, 5.72),
     scale = 2.5,
-    rgba = {r = 112, g = 87, b = 191, a = 255}
+    rgba = {r = 255, g = 133, b = 85, a = 255}
   },
 
   ["pickupLocations"] = {
@@ -69,7 +82,7 @@ Config = {
   ["deliveryMarker"] = {
     marker = 20,
     scale = 0.8,
-    rgba = {r = 112, g = 87, b = 191, a = 255}
+    rgba = {r = 255, g = 133, b = 85, a = 255}
   },
 
   ["deliveryLocations"] = {
@@ -80,6 +93,8 @@ Config = {
       color = 5,
       routeColor = 5,
       visited = false,
+      from = 500,
+      to = 700,
     },
     [2] = {
       coords = vector3(-521.09, -855.69, 30.25),
@@ -88,6 +103,8 @@ Config = {
       color = 5,
       routeColor = 5,
       visited = false,
+      from = 500,
+      to = 700,
     },
     [3] = {
       coords = vector3(-664.28, -1218.30, 11.81),
@@ -96,6 +113,8 @@ Config = {
       color = 5,
       routeColor = 5,
       visited = false,
+      from = 500,
+      to = 700,
     },
     [4] = {
       coords = vector3(-298.14, -1333.04, 31.30),
@@ -104,14 +123,18 @@ Config = {
       color = 5,
       routeColor = 5,
       visited = false,
+      from = 500,
+      to = 700,
     },
     [5] = {
-      coords = vector3(-343.52, -1483.07, 30.72),
+      coords = vector3(-342.52, -1483.07, 30.72),
       sprite = 40,
       scale = 1.0,
       color = 5,
       routeColor = 5,
       visited = false,
+      from = 500,
+      to = 700,
     },
     [6] = {
       coords = vector3(-621.03, -1639.94, 26.35),
@@ -120,6 +143,8 @@ Config = {
       color = 5,
       routeColor = 5,
       visited = false,
+      from = 500,
+      to = 700,
     },
     [7] = {
       coords = vector3(-127.96, -1394.56, 29.53),
@@ -128,6 +153,8 @@ Config = {
       color = 5,
       routeColor = 5,
       visited = false,
+      from = 500,
+      to = 700,
     },
     [8] = {
       coords = vector3(99.05, -1419.39, 29.42),
@@ -136,6 +163,8 @@ Config = {
       color = 5,
       routeColor = 5,
       visited = false,
+      from = 500,
+      to = 700,
     },
     [9] = {
       coords = vector3(60.68, -1579.97, 29.60),
@@ -144,6 +173,8 @@ Config = {
       color = 5,
       routeColor = 5,
       visited = false,
+      from = 500,
+      to = 700,
     },
     [10] = {
       coords = vector3(-239.07, -1397.76, 31.28),
@@ -152,6 +183,8 @@ Config = {
       color = 5,
       routeColor = 5,
       visited = false,
+      from = 500,
+      to = 700,
     },
   }
 }

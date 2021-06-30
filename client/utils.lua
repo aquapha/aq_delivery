@@ -27,7 +27,9 @@ AddEventHandler('aq_delivery:setupObjects', function(objects)
 end)
 
 SetPickupObject = function(id, coords, obj, items, timeleft, alerted, serverSwitch)
-  ESX.Game.SpawnLocalObject(obj, coords, function(obj)
+  local propCoords = vector3(coords.x, coords.y, coords.z - 1)
+
+  ESX.Game.SpawnLocalObject(obj, propCoords, function(obj)
     PlaceObjectOnGroundProperly(obj)
     FreezeEntityPosition(obj, true)
 

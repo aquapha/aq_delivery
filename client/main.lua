@@ -111,13 +111,46 @@ AddEventHandler('aq_delivery:deliveryStart', function()
 
     if cDelivery.visited == false then
       cDelivery.visited = true
-      local dist = #(cDelivery.coords - Config["blip"].coords)
+
+      local deliveryInfo
       
-      local deliveryInfo = {
-        id = delivery,
-        visited = cDelivery.visited,
-        pay = dist
-      }
+      if Config["payFromBaseToDeliveryPoint"] then
+        local dist = #(cDelivery.coords - Config["blip"].coords)
+        
+        if Config["payFromBaseToDeliveryPointDivider"] ~= 1 then
+          deliveryInfo = {
+            id = delivery,
+            visited = cDelivery.visited,
+            pay = dist / Config["payFromBaseToDeliveryPointDivider"]
+          }
+        elseif Config["payFromBaseToDeliveryPointMultiplier"] ~= 1 then
+          deliveryInfo = {
+            id = delivery,
+            visited = cDelivery.visited,
+            pay = dist * Config["payFromBaseToDeliveryPointMultiplier"]
+          }
+        else
+          deliveryInfo = {
+            id = delivery,
+            visited = cDelivery.visited,
+            pay = dist
+          }
+        end
+      elseif Config["payFromDeliveryPrice"] then
+        local pay = math.random(cDelivery["from"], cDelivery["to"])
+  
+        deliveryInfo = {
+          id = delivery,
+          visited = cDelivery.visited,
+          pay = pay
+        }
+      else
+        deliveryInfo = {
+          id = delivery,
+          visited = cDelivery.visited,
+          pay = 0
+        }
+      end
 
       table.insert(visited, deliveryInfo)
 
@@ -193,7 +226,7 @@ Citizen.CreateThread(function()
           local dist = #(vector3(vCoords.x, vCoords.y, vCoords.z + 0.25) - coords)
 
           if dist < 1 then
-            Draw3DText(newVCoords.x, newVCoords.y, newVCoords.z, 'Press [~p~E~s~] to take out a package. Packages: ~b~' .. jobVehicle.items .. '~s~/~b~' .. Config["itemsInVehicle"])
+            Draw3DText(newVCoords.x, newVCoords.y, newVCoords.z, 'Press [~o~E~s~] to take out a package. Packages: ~b~' .. jobVehicle.items .. '~s~/~b~' .. Config["itemsInVehicle"])
 
             if IsControlJustPressed(0, 51) then
               TakeOutOfDeliveryCar(Config["pickupLocations"][pickup]["pickup"])
@@ -343,9 +376,9 @@ Citizen.CreateThread(function()
 
         if dist < 2 then
           if jobVehicle.items >= Config["itemsInVehicle"] then
-            Draw3DText(newVCoords.x, newVCoords.y, newVCoords.z, 'Vehicles trunk is ~p~full~s~. Pakuotes: ~b~' .. jobVehicle.items .. '~s~/~b~' .. Config["itemsInVehicle"])
+            Draw3DText(newVCoords.x, newVCoords.y, newVCoords.z, 'Vehicles trunk is ~o~full~s~. Pakuotes: ~b~' .. jobVehicle.items .. '~s~/~b~' .. Config["itemsInVehicle"])
           else
-            Draw3DText(newVCoords.x, newVCoords.y, newVCoords.z, 'Press [~p~E~s~] to put in the package. Packages: ~b~' .. jobVehicle.items .. '~s~/~b~' .. Config["itemsInVehicle"])
+            Draw3DText(newVCoords.x, newVCoords.y, newVCoords.z, 'Press [~o~E~s~] to put in the package. Packages: ~b~' .. jobVehicle.items .. '~s~/~b~' .. Config["itemsInVehicle"])
   
             if IsControlJustReleased(0, 51) then
               PutInDeliveryCar(ply)
@@ -357,7 +390,7 @@ Citizen.CreateThread(function()
 
         if dist < 2 then
           if spawnedPickup[pickup].items > 0 then
-            Draw3DText(spawnedPickup[pickup].coords.x, spawnedPickup[pickup].coords.y, spawnedPickup[pickup].coords.z, 'Press [~p~E~s~] to pick up a package. Packages: ~b~' .. spawnedPickup[pickup].items .. '~s~/~b~' .. Config["itemsInPalette"])
+            Draw3DText(spawnedPickup[pickup].coords.x, spawnedPickup[pickup].coords.y, spawnedPickup[pickup].coords.z, 'Press [~o~E~s~] to pick up a package. Packages: ~b~' .. spawnedPickup[pickup].items .. '~s~/~b~' .. Config["itemsInPalette"])
 
             if IsControlJustPressed(0, 51) then
               PickupBoxFromObject(pickup, Config["pickupLocations"][pickup]["pickup"])
@@ -506,6 +539,10 @@ TakeOutOfDeliveryCar = function(obj)
 
   Citizen.Wait(200)
   isCarryingArrive = true
+
+  Citizen.Wait(500)
+  SetVehicleDoorShut(deliveryCar, 2, true)
+  SetVehicleDoorShut(deliveryCar, 3, true)
 end
 
 Draw3DText = function(x, y, z, text)
@@ -533,8 +570,9 @@ Draw3DText = function(x, y, z, text)
       SetTextEntry("STRING")
       AddTextComponentString(text)
       EndTextCommandDisplayText(_x, _y)
-
-      DrawRect(_x, (_y + scale / 78), width, height, 10, 10, 10, 100)
+      if Config["drawRect"] then
+        DrawRect(_x, (_y + scale / 78), width, height, 10, 10, 10, 100)
+      end
   end
 end
 

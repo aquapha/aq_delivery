@@ -69,7 +69,7 @@ AddEventHandler('aq_delivery:payInsurance', function(amount)
     xPlayer.removeMoney(Config["insurancePrice"])
   end
 
-  xPlayer.showNotification('You paid: ~p~' .. Config["insurancePrice"] .. '$ ~s~for insurance.')
+  xPlayer.showNotification('You paid: ~o~' .. Config["insurancePrice"] .. '$ ~s~for insurance.')
 end)
 
 RegisterServerEvent('aq_delivery:refreshValues')
@@ -86,8 +86,12 @@ AddEventHandler('aq_delivery:pay', function(deliveries)
     toPay = toPay + v.pay
   end
 
-  xPlayer.addMoney(toPay)
-  xPlayer.showNotification('You\'ve been paid a total of: ~b~' .. math.floor(toPay) .. '$ ~s~for all the deliveries combined.')
+  if toPay ~= 0 then
+    xPlayer.addMoney(toPay)
+    xPlayer.showNotification('You\'ve been paid a total of: ~g~' .. math.floor(toPay) .. '$ ~s~for all the deliveries combined.')
+  else
+    xPlayer.showNotification('Currently, salaries are ~r~disabled~s~.')
+  end
 end)
 
 Citizen.CreateThread(function()
